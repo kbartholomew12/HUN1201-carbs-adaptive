@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptive Module 3 Carbohydrate Mastery Lab</title>
+  <style>
+    :root {
+      --card: #ffffff;
+      --ink: #222222;
+      --muted: #5f6368;
+      --primary: #006d77;
+      --primary-light: #e2f6f8;
+      --secondary: #7b2cbf;
+      --secondary-light: #f1e7fb;
+      --success: #2e7d32;
+      --success-light: #e9f6ea;
+      --warning: #b26a00;
+      --warning-light: #fff2de;
+      --danger: #b42318;
+      --danger-light: #fdecec;
+      --border: #d8dde3;
+      --radius: 18px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #eef8fa 0%, #f8f2fb 100%);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .app { max-width: 1280px; margin: 0 auto; padding: 24px; }
+
+    .hero, .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero { padding: 30px; margin-bottom: 20px; }
+    .card { padding: 22px; margin-bottom: 20px; }
+
+    h1, h2, h3 { margin-top: 0; line-height: 1.15; }
+    h1 { color: var(--secondary); font-size: clamp(2rem, 3vw, 3.2rem); margin-bottom: 10px; }
+    h2 { color: var(--primary); }
+    .subtitle { color: var(--muted); max-width: 920px; font-size: 1.06rem; }
+
+    .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge { background: var(--secondary-light); color: var(--secondary); padding: 8px 12px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 960px) { .grid.two { grid-template-columns: 360px 1fr; } }
+
+    .sticky { position: sticky; top: 20px; align-self: start; }
+
+    button, .choice {
+      border: 2px solid var(--border);
+      background: #ffffff;
+      color: var(--ink);
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+
+    button:hover, .choice:hover { transform: translateY(-1px); border-color: var(--primary); background: var(--primary-light); }
+    button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+    .choice.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .primary-btn { background: var(--secondary); color: #fff; border-color: var(--secondary); text-align: center; }
+    .secondary-btn { background: var(--primary); color: #fff; border-color: var(--primary); text-align: center; }
+    .ghost-btn { background: #fff; color: var(--secondary); border-color: var(--secondary); text-align: center; }
+    .danger-btn { background: #fff; color: var(--danger); border-color: var(--danger); text-align: center; }
+
+    .action-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .hidden { display: none !important; }
+    .small-note { color: var(--muted); font-size: .92rem; }
+
+    .stepper { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .step-dot { padding: 8px 10px; border-radius: 999px; border: 1px solid var(--border); background: #fff; font-weight: 800; color: var(--muted); }
+    .step-dot.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .step-dot.complete { background: var(--success); color: #fff; border-color: var(--success); }
+
+    .question-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 16px; background: #fbfbfd; }
+    .question-card h3 { color: var(--secondary); }
+    .option-grid { display: grid; gap: 10px; margin-top: 12px; }
+    .confidence-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .confidence-row button { padding: 8px 10px; font-size: .9rem; }
+
+    textarea, input, select {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 1rem;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    textarea { min-height: 110px; resize: vertical; }
+    label { display: block; font-weight: 800; margin: 16px 0 6px; }
+
+    .callout { border-left: 8px solid var(--warning); background: var(--warning-light); padding: 16px; border-radius: var(--radius); margin-top: 16px; }
+    .info { border-left: 8px solid var(--primary); background: var(--primary-light); padding: 16px; border-radius: var(--radius); margin-bottom: 16px; }
+
+    .feedback { margin-top: 18px; padding: 18px; border-radius: var(--radius); border: 1px solid var(--border); display: none; }
+    .feedback.show { display: block; }
+    .feedback.good { background: var(--success-light); border-color: #badfbd; }
+    .feedback.warning { background: var(--warning-light); border-color: #ffd7a1; }
+    .feedback.info { background: var(--secondary-light); border-color: #d5c0ef; }
+    .feedback.danger { background: var(--danger-light); border-color: #f1b8b4; }
+
+    .meter { height: 18px; background: #eeeeee; border: 1px solid #d0d0d0; border-radius: 999px; overflow: hidden; }
+    .meter-fill { height: 100%; width: 0%; background: var(--primary); transition: width .4s ease; }
+    .score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .score-card { border: 1px solid var(--border); border-radius: 16px; padding: 16px; background: #fafafa; }
+    .score-card h3 { color: var(--secondary); margin-bottom: 8px; }
+
+    .mission { border: 2px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 18px; background: #fff; }
+    .mission.rebuild { border-left: 8px solid var(--warning); }
+    .mission.challenge { border-left: 8px solid var(--secondary); }
+    .mission.complete { border-color: var(--success); background: var(--success-light); }
+    .mission-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .pill { padding: 6px 10px; border-radius: 999px; background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: .86rem; }
+
+    .drag-bank, .drop-zone { display: flex; flex-wrap: wrap; gap: 10px; padding: 14px; border-radius: 16px; border: 2px dashed var(--border); min-height: 74px; background: #fcfcfc; }
+    .drag-item { padding: 10px 12px; border-radius: 999px; background: var(--secondary); color: white; font-weight: 800; cursor: grab; user-select: none; }
+    .drop-zone .drag-item { cursor: pointer; }
+
+    .mini-sim { border: 1px solid var(--border); border-radius: 16px; padding: 14px; background: #fbfbfd; margin-top: 12px; }
+    .slider-row { display: grid; gap: 8px; margin-top: 12px; }
+    input[type="range"] { padding: 0; }
+
+    pre { white-space: pre-wrap; background: #fafafa; border: 1px solid var(--border); padding: 16px; border-radius: 14px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <h1>Adaptive Module 3 Carbohydrate Mastery Lab™</h1>
+      <p class="subtitle">Start with a diagnostic based on the Module 3 carbohydrate reading. Then receive an individualized set of interactive missions that rebuild weaker concepts and challenge stronger concepts.</p>
+      <div class="badge-row">
+        <span class="badge">Carb Structure</span>
+        <span class="badge">Food Sources</span>
+        <span class="badge">Digestion</span>
+        <span class="badge">Blood Glucose</span>
+        <span class="badge">Diabetes</span>
+        <span class="badge">Fiber</span>
+      </div>
+    </section>
+
+    <div class="grid two">
+      <aside class="card sticky">
+        <h2>Progress</h2>
+        <div class="stepper" id="stepper"></div>
+        <div class="callout">
+          <strong>How this works:</strong>
+          <ol>
+            <li>Complete the diagnostic.</li>
+            <li>Review your mastery profile.</li>
+            <li>Complete your personalized missions.</li>
+            <li>Download the PDF and upload it to Canvas.</li>
+          </ol>
+        </div>
+        <div class="info">
+          <strong>AI-resistant design:</strong> You must make predictions, interact with mini-simulations, explain your reasoning, and submit a pathway generated from your own diagnostic results.
+        </div>
+      </aside>
+
+      <section class="card">
+        <div id="screenIntro">
+          <h2>Start the Diagnostic Mastery Check</h2>
+          <p>This diagnostic checks your current understanding of Module 3 concepts. Your score is used to create your personalized assignment pathway.</p>
+          <p><strong>Important:</strong> This activity is not asking you to memorize every detail. It is checking whether you can apply the reading concepts to realistic nutrition situations.</p>
+          <label for="studentName">Student name</label>
+          <input id="studentName" placeholder="Enter your name for the PDF submission" />
+          <div class="action-row">
+            <button class="primary-btn" id="beginBtn" type="button">Begin Diagnostic</button>
+          </div>
+        </div>
+
+        <div id="screenDiagnostic" class="hidden">
+          <h2>Part 1: Diagnostic Mastery Check</h2>
+          <p class="small-note">Answer each question and rate your confidence. Low confidence helps the assignment give you better practice.</p>
+          <div id="diagnosticQuestions"></div>
+          <div class="action-row">
+            <button class="primary-btn" id="scoreBtn" type="button">Generate My Learning Pathway</button>
+          </div>
+        </div>
+
+        <div id="screenResults" class="hidden">
+          <h2>Your Personalized Mastery Profile</h2>
+          <div id="overallFeedback" class="info"></div>
+          <div class="score-grid" id="scoreGrid"></div>
+          <div class="action-row">
+            <button class="primary-btn" id="startMissionsBtn" type="button">Start My Personalized Missions</button>
+          </div>
+        </div>
+
+        <div id="screenMissions" class="hidden">
+          <h2>Part 2: Your Personalized Interactive Missions</h2>
+          <p class="small-note">Complete each mission. Your mission evidence and explanations will be included in your Canvas PDF.</p>
+          <div id="missionContainer"></div>
+          <div class="action-row">
+            <button class="primary-btn" id="checkMissionsBtn" type="button">Check Mission Completion</button>
+          </div>
+        </div>
+
+        <div id="screenSubmit" class="hidden">
+          <h2>Part 3: Submission Summary</h2>
+          <p>Your personalized pathway is complete. Generate your summary, save it as a PDF, and upload it to Canvas.</p>
+          <div class="action-row">
+            <button class="primary-btn" id="summaryBtn" type="button">Generate Submission Summary</button>
+            <button class="secondary-btn hidden" id="pdfBtn" type="button">Download/Save PDF</button>
+          </div>
+          <div id="summaryOutput" class="hidden">
+            <h3>Canvas Submission Summary</h3>
+            <pre id="summaryText"></pre>
+          </div>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    'use strict';
+
+    const categories = {
+      structure: 'Carbohydrate Structure',
+      foods: 'Food Sources & Processing',
+      digestion: 'Digestion & Absorption',
+      glucose: 'Blood Glucose Regulation',
+      health: 'Diabetes, Sugar & Dental Health',
+      fiber: 'Fiber'
+    };
+
+    const diagnosticItems = [
+      {
+        id: 'q1', category: 'structure',
+        question: 'Which statement best describes monosaccharides?',
+        options: ['They are single sugar units that cannot be digested into smaller carbohydrate units.', 'They are long chains of glucose used only for storage.', 'They are non-digestible carbohydrates found only in grains.', 'They are proteins that help digest carbohydrates.'],
+        correct: 0,
+        feedback: 'Monosaccharides are the simplest carbohydrate units and are small enough to be absorbed.'
+      },
+      {
+        id: 'q2', category: 'structure',
+        question: 'Which option correctly matches a disaccharide from the reading?',
+        options: ['Sucrose = glucose + fructose', 'Lactose = glucose + glucose', 'Maltose = fructose + galactose', 'Glycogen = glucose + fructose'],
+        correct: 0,
+        feedback: 'Sucrose is made of glucose and fructose. Lactose is glucose and galactose. Maltose is two glucose units.'
+      },
+      {
+        id: 'q3', category: 'foods',
+        question: 'Which food group is described as the one animal food group that naturally contains carbohydrate?',
+        options: ['Dairy', 'Added fats', 'Meat', 'Eggs'],
+        correct: 0,
+        feedback: 'Milk, yogurt, and some dairy foods contain lactose.'
+      },
+      {
+        id: 'q4', category: 'foods',
+        question: 'Why can whole fruit affect blood sugar differently than fruit juice?',
+        options: ['Whole fruit contains fiber that slows sugar absorption.', 'Whole fruit has no sugar.', 'Fruit juice contains mostly protein.', 'Fruit juice contains insoluble fat.'],
+        correct: 0,
+        feedback: 'Whole fruit contains natural sugar plus fiber; juice has little fiber and may produce a faster glycemic response.'
+      },
+      {
+        id: 'q5', category: 'digestion',
+        question: 'Where does chemical digestion of carbohydrate begin?',
+        options: ['Mouth, with salivary amylase', 'Stomach, with stomach acid', 'Large intestine, with bile', 'Liver, with insulin'],
+        correct: 0,
+        feedback: 'Carbohydrate digestion begins in the mouth with salivary amylase.'
+      },
+      {
+        id: 'q6', category: 'digestion',
+        question: 'Why can lactose intolerance cause gas, bloating, or diarrhea?',
+        options: ['Lactose is not properly broken down when lactase is low.', 'Lactose is a type of fat that cannot enter cells.', 'Lactose contains no carbohydrate bonds.', 'Lactose directly destroys insulin.'],
+        correct: 0,
+        feedback: 'Lactase breaks lactose into monosaccharides. Low lactase can make lactose difficult to digest.'
+      },
+      {
+        id: 'q7', category: 'glucose',
+        question: 'Which hormone is released when blood glucose is high after a carbohydrate-containing meal?',
+        options: ['Insulin', 'Glucagon', 'Lactase', 'Amylase'],
+        correct: 0,
+        feedback: 'Insulin is released when blood glucose is high and helps cells take up glucose.'
+      },
+      {
+        id: 'q8', category: 'glucose',
+        question: 'What typically happens during the fasted state more than about 4 hours after a meal?',
+        options: ['Glucagon helps break down liver glycogen to maintain blood glucose.', 'Insulin rises sharply to store glucose as fat.', 'Fiber is absorbed directly into the bloodstream.', 'The stomach chemically digests all starch.'],
+        correct: 0,
+        feedback: 'In the fasted state, glucagon stimulates glycogenolysis and helps maintain blood glucose.'
+      },
+      {
+        id: 'q9', category: 'health',
+        question: 'Which statement best matches Type 2 diabetes physiology from the reading?',
+        options: ['The body may not use its own insulin effectively, called insulin resistance.', 'The body can digest fiber into glucose too quickly.', 'The body cannot absorb any monosaccharides.', 'The pancreas only releases glucagon after every meal.'],
+        correct: 0,
+        feedback: 'Type 2 diabetes commonly involves insulin resistance.'
+      },
+      {
+        id: 'q10', category: 'health',
+        question: 'Why are sticky candies and frequent sipping of sweet beverages risky for dental health?',
+        options: ['They increase carbohydrate exposure to oral bacteria that produce acid.', 'They contain protein that dissolves enamel.', 'They make the mouth too alkaline.', 'They prevent fermentation by oral bacteria.'],
+        correct: 0,
+        feedback: 'Oral bacteria ferment carbohydrates and produce acid, which can contribute to enamel demineralization.'
+      },
+      {
+        id: 'q11', category: 'fiber',
+        question: 'Which statement best describes soluble fiber?',
+        options: ['It forms a gel in digestive juices and can slow glucose absorption.', 'It is absorbed directly as glucose.', 'It only exists in animal foods.', 'It raises blood glucose faster than added sugar.'],
+        correct: 0,
+        feedback: 'Soluble fiber forms a gel, slows digestion, helps regulate glucose absorption, and can help lower cholesterol.'
+      },
+      {
+        id: 'q12', category: 'fiber',
+        question: 'Which statement best describes insoluble fiber?',
+        options: ['It helps add bulk and supports bowel regularity.', 'It is converted directly to blood glucose in the stomach.', 'It is the main carbohydrate in milk.', 'It is the same as high-fructose corn syrup.'],
+        correct: 0,
+        feedback: 'Insoluble fiber adds bulk and helps prevent constipation.'
+      }
+    ];
+
+    const state = {
+      step: 'intro',
+      answers: {},
+      confidence: {},
+      scores: {},
+      assignedMissions: [],
+      missionEvidence: {},
+      studentName: ''
+    };
+
+    const stepper = document.getElementById('stepper');
+    const diagnosticQuestions = document.getElementById('diagnosticQuestions');
+    const feedback = document.getElementById('feedback');
+    const scoreGrid = document.getElementById('scoreGrid');
+    const overallFeedback = document.getElementById('overallFeedback');
+    const missionContainer = document.getElementById('missionContainer');
+    const summaryText = document.getElementById('summaryText');
+    const summaryOutput = document.getElementById('summaryOutput');
+    const pdfBtn = document.getElementById('pdfBtn');
+
+    function renderStepper() {
+      stepper.textContent = '';
+      const steps = [
+        { key: 'intro', label: 'Start' },
+        { key: 'diagnostic', label: 'Diagnostic' },
+        { key: 'results', label: 'Profile' },
+        { key: 'missions', label: 'Missions' },
+        { key: 'submit', label: 'Submit' }
+      ];
+      const currentIndex = steps.findIndex((step) => step.key === state.step);
+      steps.forEach((step, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'step-dot';
+        if (index === currentIndex) dot.classList.add('active');
+        if (index < currentIndex) dot.classList.add('complete');
+        dot.textContent = String(index + 1) + '. ' + step.label;
+        stepper.appendChild(dot);
+      });
+    }
+
+    function showScreen(name) {
+      state.step = name;
+      document.getElementById('screenIntro').classList.toggle('hidden', name !== 'intro');
+      document.getElementById('screenDiagnostic').classList.toggle('hidden', name !== 'diagnostic');
+      document.getElementById('screenResults').classList.toggle('hidden', name !== 'results');
+      document.getElementById('screenMissions').classList.toggle('hidden', name !== 'missions');
+      document.getElementById('screenSubmit').classList.toggle('hidden', name !== 'submit');
+      feedback.className = 'feedback';
+      feedback.textContent = '';
+      renderStepper();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showFeedback(style, title, text) {
+      feedback.className = 'feedback show ' + style;
+      feedback.textContent = '';
+      const h = document.createElement('h3');
+      h.textContent = title;
+      const p = document.createElement('p');
+      p.textContent = text;
+      feedback.appendChild(h);
+      feedback.appendChild(p);
+    }
+
+    function renderDiagnostic() {
+      diagnosticQuestions.textContent = '';
+      diagnosticItems.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+
+        const heading = document.createElement('h3');
+        heading.textContent = 'Question ' + String(index + 1) + ': ' + categories[item.category];
+        card.appendChild(heading);
+
+        const q = document.createElement('p');
+        q.textContent = item.question;
+        card.appendChild(q);
+
+        const optionGrid = document.createElement('div');
+        optionGrid.className = 'option-grid';
+        item.options.forEach((option, optionIndex) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'choice';
+          btn.textContent = option;
+          btn.addEventListener('click', () => {
+            state.answers[item.id] = optionIndex;
+            optionGrid.querySelectorAll('.choice').forEach((choice) => choice.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionGrid.appendChild(btn);
+        });
+        card.appendChild(optionGrid);
+
+        const confidenceLabel = document.createElement('p');
+        confidenceLabel.className = 'small-note';
+        confidenceLabel.textContent = 'Confidence rating:';
+        card.appendChild(confidenceLabel);
+
+        const confidenceRow = document.createElement('div');
+        confidenceRow.className = 'confidence-row';
+        ['Low', 'Medium', 'High'].forEach((level) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = level;
+          btn.addEventListener('click', () => {
+            state.confidence[item.id] = level;
+            confidenceRow.querySelectorAll('button').forEach((choice) => choice.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          confidenceRow.appendChild(btn);
+        });
+        card.appendChild(confidenceRow);
+        diagnosticQuestions.appendChild(card);
+      });
+    }
+
+    function scoreDiagnostic() {
+      const missingAnswer = diagnosticItems.some((item) => state.answers[item.id] === undefined);
+      const missingConfidence = diagnosticItems.some((item) => !state.confidence[item.id]);
+      if (missingAnswer || missingConfidence) {
+        showFeedback('warning', 'Complete all items.', 'Answer every diagnostic question and select a confidence rating for each one.');
+        return;
+      }
+
+      const raw = {};
+      Object.keys(categories).forEach((key) => {
+        raw[key] = { correct: 0, total: 0, lowConfidenceCorrect: 0, highConfidenceWrong: 0 };
+      });
+
+      diagnosticItems.forEach((item) => {
+        const categoryScore = raw[item.category];
+        categoryScore.total += 1;
+        const correct = state.answers[item.id] === item.correct;
+        if (correct) categoryScore.correct += 1;
+        if (correct && state.confidence[item.id] === 'Low') categoryScore.lowConfidenceCorrect += 1;
+        if (!correct && state.confidence[item.id] === 'High') categoryScore.highConfidenceWrong += 1;
+      });
+
+      Object.keys(raw).forEach((key) => {
+        const percent = Math.round((raw[key].correct / raw[key].total) * 100);
+        let level = 'Emerging';
+        if (percent >= 100) level = 'Advanced';
+        else if (percent >= 50) level = 'Developing';
+        state.scores[key] = { percent, level, details: raw[key] };
+      });
+
+      assignMissions();
+      renderResults();
+      showScreen('results');
+    }
+
+    function assignMissions() {
+      const missions = [];
+      Object.keys(categories).forEach((key) => {
+        const score = state.scores[key];
+        if (score.level === 'Emerging') {
+          missions.push(makeMission(key, 'rebuild'));
+        } else if (score.level === 'Developing') {
+          missions.push(makeMission(key, 'apply'));
+        } else {
+          missions.push(makeMission(key, 'challenge'));
+        }
+      });
+      state.assignedMissions = missions;
+    }
+
+    function makeMission(category, mode) {
+      const bank = {
+        structure: {
+          rebuild: { title: 'Carb Builder Repair Mission', activity: 'builder', prompt: 'Build and classify carbohydrate structures to repair your understanding of monosaccharides, disaccharides, starch, glycogen, and fiber.' },
+          apply: { title: 'Structure-to-Digestion Sort', activity: 'sorter', prompt: 'Sort carbohydrate structures by how much digestion is needed before absorption.' },
+          challenge: { title: 'Carbohydrate Structure Designer', activity: 'designer', prompt: 'Design a mini-explanation showing why carbohydrate structure changes digestion speed and blood glucose response.' }
+        },
+        foods: {
+          rebuild: { title: 'Carb Source Rescue Mission', activity: 'foodSort', prompt: 'Sort foods into carbohydrate-containing and non-carbohydrate categories using Module 3 food source rules.' },
+          apply: { title: 'Whole vs Refined Detective', activity: 'compare', prompt: 'Compare whole grain, refined grain, fruit, juice, dairy, meat, and added fat examples.' },
+          challenge: { title: 'Food Label Claim Investigator', activity: 'claim', prompt: 'Evaluate a “made with whole grains” or “no sugar added” style claim using Module 3 logic.' }
+        },
+        digestion: {
+          rebuild: { title: 'Digestive Journey Repair', activity: 'sequence', prompt: 'Put carbohydrate digestion steps in order from mouth to bloodstream.' },
+          apply: { title: 'Lactose Intolerance Case Check', activity: 'case', prompt: 'Analyze why a person may experience gas, bloating, or diarrhea after lactose-containing foods.' },
+          challenge: { title: 'Digestion Explainer Challenge', activity: 'explain', prompt: 'Create a concise explanation of why only monosaccharides are absorbed.' }
+        },
+        glucose: {
+          rebuild: { title: 'You Are the Pancreas: Guided Mode', activity: 'pancreas', prompt: 'Predict insulin, glucagon, glycogen storage, and glucose response across fed and fasted states.' },
+          apply: { title: 'Glycemic Curve Predictor', activity: 'glucoseSim', prompt: 'Manipulate fiber, processing, and protein to predict glucose response.' },
+          challenge: { title: 'Diabetic Meal Hack Challenge', activity: 'mealHack', prompt: 'Redesign a realistic meal to reduce a sharp glucose spike while keeping it enjoyable.' }
+        },
+        health: {
+          rebuild: { title: 'Diabetes & Dental Health Repair', activity: 'healthMatch', prompt: 'Match diabetes, sugar, artificial sweetener, and dental health concepts to their mechanisms.' },
+          apply: { title: 'Sugar Consequence Case', activity: 'case', prompt: 'Analyze a high added-sugar pattern and connect it to glucose spikes, fatty liver risk, dental health, or energy balance.' },
+          challenge: { title: 'Carb MythBusters', activity: 'myth', prompt: 'Investigate a carbohydrate myth and rewrite it as a more accurate science-based message.' }
+        },
+        fiber: {
+          rebuild: { title: 'Fiber Function Builder', activity: 'fiberSort', prompt: 'Differentiate soluble and insoluble fiber using their actions in the digestive tract.' },
+          apply: { title: 'Fiber Food Upgrade', activity: 'fiberUpgrade', prompt: 'Upgrade a low-fiber eating pattern with foods that support bowel regularity, cholesterol, and blood sugar.' },
+          challenge: { title: 'Fiber Influencer Challenge', activity: 'influencer', prompt: 'Create a public-facing fiber message that is engaging, accurate, and physiology-based.' }
+        }
+      };
+      const selected = bank[category][mode];
+      return {
+        id: category + '_' + mode,
+        category,
+        mode,
+        title: selected.title,
+        activity: selected.activity,
+        prompt: selected.prompt,
+        completed: false
+      };
+    }
+
+    function renderResults() {
+      const overall = diagnosticItems.filter((item) => state.answers[item.id] === item.correct).length;
+      const total = diagnosticItems.length;
+      overallFeedback.textContent = 'You answered ' + overall + ' out of ' + total + ' diagnostic questions correctly. Your personalized missions were generated from both accuracy and confidence patterns.';
+      scoreGrid.textContent = '';
+      Object.keys(categories).forEach((key) => {
+        const card = document.createElement('div');
+        card.className = 'score-card';
+        const h = document.createElement('h3');
+        h.textContent = categories[key];
+        const p = document.createElement('p');
+        p.innerHTML = '<strong>Mastery level:</strong> ' + state.scores[key].level;
+        const meter = document.createElement('div');
+        meter.className = 'meter';
+        const fill = document.createElement('div');
+        fill.className = 'meter-fill';
+        fill.style.width = String(state.scores[key].percent) + '%';
+        meter.appendChild(fill);
+        const percent = document.createElement('p');
+        percent.className = 'small-note';
+        percent.textContent = String(state.scores[key].percent) + '% diagnostic accuracy';
+        card.appendChild(h);
+        card.appendChild(p);
+        card.appendChild(meter);
+        card.appendChild(percent);
+        scoreGrid.appendChild(card);
+      });
+    }
+
+    function renderMissions() {
+      missionContainer.textContent = '';
+      state.assignedMissions.forEach((mission, index) => {
+        const box = document.createElement('div');
+        box.className = 'mission ' + (mission.mode === 'challenge' ? 'challenge' : 'rebuild');
+        box.id = 'missionBox_' + mission.id;
+
+        const meta = document.createElement('div');
+        meta.className = 'mission-meta';
+        meta.innerHTML = '<span class="pill">' + categories[mission.category] + '</span><span class="pill">' + mission.mode.toUpperCase() + '</span>';
+        box.appendChild(meta);
+
+        const h = document.createElement('h3');
+        h.textContent = 'Mission ' + String(index + 1) + ': ' + mission.title;
+        box.appendChild(h);
+
+        const p = document.createElement('p');
+        p.textContent = mission.prompt;
+        box.appendChild(p);
+
+        box.appendChild(renderMissionActivity(mission));
+        missionContainer.appendChild(box);
+      });
+    }
+
+    function renderMissionActivity(mission) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'mini-sim';
+
+      if (['builder', 'sorter', 'foodSort', 'sequence', 'fiberSort', 'healthMatch'].includes(mission.activity)) {
+        wrapper.appendChild(renderDragMission(mission));
+      } else if (['glucoseSim', 'pancreas'].includes(mission.activity)) {
+        wrapper.appendChild(renderSliderMission(mission));
+      } else {
+        wrapper.appendChild(renderWritingMission(mission));
+      }
+
+      const label = document.createElement('label');
+      label.textContent = 'Explain what you learned or how you applied the Module 3 reading.';
+      wrapper.appendChild(label);
+
+      const textarea = document.createElement('textarea');
+      textarea.id = 'evidence_' + mission.id;
+      textarea.placeholder = 'Write 3-5 sentences using Module 3 terms. Be specific about digestion, blood glucose, fiber, food sources, hormones, diabetes, sugar, or health effects as relevant.';
+      wrapper.appendChild(textarea);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'secondary-btn';
+      btn.textContent = 'Save This Mission Evidence';
+      btn.addEventListener('click', () => saveMission(mission));
+      wrapper.appendChild(btn);
+
+      return wrapper;
+    }
+
+    function renderDragMission(mission) {
+      const container = document.createElement('div');
+      const instructions = document.createElement('p');
+      instructions.textContent = 'Drag the best items into the evidence zone. Click an item in the evidence zone to remove it.';
+      container.appendChild(instructions);
+
+      const bank = document.createElement('div');
+      bank.className = 'drag-bank';
+      const drop = document.createElement('div');
+      drop.className = 'drop-zone';
+      drop.id = 'drop_' + mission.id;
+
+      const items = getDragItems(mission.activity);
+      items.forEach((text) => {
+        const item = document.createElement('div');
+        item.className = 'drag-item';
+        item.draggable = true;
+        item.textContent = text;
+        item.addEventListener('dragstart', (event) => event.dataTransfer.setData('text/plain', text));
+        bank.appendChild(item);
+      });
+
+      drop.addEventListener('dragover', (event) => event.preventDefault());
+      drop.addEventListener('drop', (event) => {
+        event.preventDefault();
+        const text = event.dataTransfer.getData('text/plain');
+        if (!text) return;
+        const item = document.createElement('div');
+        item.className = 'drag-item';
+        item.textContent = text;
+        item.addEventListener('click', () => item.remove());
+        drop.appendChild(item);
+      });
+
+      container.appendChild(bank);
+      const dropLabel = document.createElement('p');
+      dropLabel.innerHTML = '<strong>Evidence zone:</strong>';
+      container.appendChild(dropLabel);
+      container.appendChild(drop);
+      return container;
+    }
+
+    function getDragItems(activity) {
+      const banks = {
+        builder: ['glucose', 'fructose', 'galactose', 'sucrose', 'lactose', 'maltose', 'starch', 'glycogen', 'fiber'],
+        sorter: ['monosaccharide absorbs directly', 'disaccharide needs bond broken', 'starch has many glucose units', 'fiber is not digested into monosaccharides', 'protein is a carbohydrate'],
+        foodSort: ['fruit', 'vegetables', 'grains', 'dairy', 'meat', 'added fats', 'beans', 'whole grains'],
+        sequence: ['mouth: salivary amylase', 'stomach: mechanical mixing', 'small intestine: enzymes continue digestion', 'monosaccharides absorbed', 'bloodstream transports glucose'],
+        fiberSort: ['soluble fiber forms gel', 'insoluble fiber adds bulk', 'beans', 'oats', 'wheat bran', 'skin on fruits and vegetables'],
+        healthMatch: ['insulin resistance', 'hyperglycemia', 'sticky candy exposure', 'oral bacteria produce acid', 'sugar alcohols may cause gas', 'sugar-free can still contain carbohydrate']
+      };
+      return banks[activity] || ['Module 3 concept', 'physiology mechanism', 'food source', 'health effect'];
+    }
+
+    function renderSliderMission(mission) {
+      const container = document.createElement('div');
+      const p = document.createElement('p');
+      p.textContent = 'Manipulate the scenario and predict the physiological effect.';
+      container.appendChild(p);
+
+      const sliderRow = document.createElement('div');
+      sliderRow.className = 'slider-row';
+      const label = document.createElement('label');
+      label.textContent = mission.activity === 'pancreas' ? 'Hours since last meal' : 'Fiber/protein added to meal';
+      const slider = document.createElement('input');
+      slider.type = 'range';
+      slider.min = '0';
+      slider.max = '10';
+      slider.value = '3';
+      const output = document.createElement('p');
+      output.className = 'info';
+      slider.addEventListener('input', () => {
+        const value = Number(slider.value);
+        if (mission.activity === 'pancreas') {
+          output.textContent = value < 4 ? 'Fed state prediction: insulin is more active and glucose may be used or stored as glycogen/fat.' : 'Fasted state prediction: glucagon becomes more active and liver glycogen may be broken down.';
+        } else {
+          output.textContent = value < 4 ? 'Prediction: low fiber/protein may allow a sharper glucose rise.' : 'Prediction: more fiber/protein may slow absorption and create a more gradual glucose response.';
+        }
+      });
+      slider.dispatchEvent(new Event('input'));
+      sliderRow.appendChild(label);
+      sliderRow.appendChild(slider);
+      sliderRow.appendChild(output);
+      container.appendChild(sliderRow);
+      return container;
+    }
+
+    function renderWritingMission(mission) {
+      const container = document.createElement('div');
+      const prompt = document.createElement('p');
+      prompt.innerHTML = '<strong>Scenario:</strong> ' + getWritingScenario(mission.activity);
+      container.appendChild(prompt);
+      return container;
+    }
+
+    function getWritingScenario(activity) {
+      const scenarios = {
+        designer: 'Create a student-friendly explanation showing why simple sugars generally digest faster than complex carbohydrates, and why fiber behaves differently.',
+        compare: 'A student says, “all complex carbs are healthy and all simple sugars are bad.” Correct this using fruit, whole grains, refined grains, and added sugar examples.',
+        claim: 'A cereal says “made with whole grains.” Explain what a student should check before assuming it is mostly whole grain.',
+        case: 'A student drinks milk and later has gas, bloating, and diarrhea. Explain the carbohydrate digestion issue involved.',
+        explain: 'Explain why starch must be digested before absorption but glucose does not require further carbohydrate digestion.',
+        mealHack: 'Redesign a sweet drink + pastry meal to reduce a sharp blood glucose rise while keeping it realistic for a college student.',
+        myth: 'Choose one carb myth, explain what is misleading, and rewrite it as a science-based message.',
+        fiberUpgrade: 'Upgrade a low-fiber day of eating with at least five fiber-rich foods and explain the expected effects.',
+        influencer: 'Create a short social media post that teaches soluble or insoluble fiber accurately without exaggeration.'
+      };
+      return scenarios[activity] || 'Apply your Module 3 concept to a realistic nutrition situation.';
+    }
+
+    function saveMission(mission) {
+      const evidence = document.getElementById('evidence_' + mission.id).value.trim();
+      if (evidence.length < 120) {
+        showFeedback('warning', 'Add more mission evidence.', 'Write at least 4 strong sentences explaining your reasoning for this mission.');
+        return;
+      }
+
+      const drop = document.getElementById('drop_' + mission.id);
+      const draggedItems = drop ? Array.from(drop.querySelectorAll('.drag-item')).map((item) => item.textContent) : [];
+
+      state.missionEvidence[mission.id] = {
+        title: mission.title,
+        category: categories[mission.category],
+        mode: mission.mode,
+        activity: mission.activity,
+        draggedItems,
+        evidence
+      };
+      mission.completed = true;
+      const box = document.getElementById('missionBox_' + mission.id);
+      if (box) box.classList.add('complete');
+      showFeedback('good', 'Mission saved.', 'This mission evidence was saved for your PDF.');
+    }
+
+    function checkMissionCompletion() {
+      const incomplete = state.assignedMissions.filter((mission) => !mission.completed);
+      if (incomplete.length > 0) {
+        showFeedback('warning', 'Finish all missions.', 'You still have ' + String(incomplete.length) + ' mission(s) to complete before the final submission.');
+        return;
+      }
+      showScreen('submit');
+    }
+
+    function buildSubmissionSummary() {
+      const lines = [];
+      lines.push('Adaptive Module 3 Carbohydrate Mastery Lab Submission');
+      lines.push('=================================================');
+      lines.push('Student Name: ' + state.studentName);
+      lines.push('');
+      lines.push('Diagnostic Mastery Profile');
+      lines.push('=================================================');
+      Object.keys(categories).forEach((key) => {
+        lines.push(categories[key] + ': ' + state.scores[key].level + ' (' + String(state.scores[key].percent) + '%)');
+      });
+      lines.push('');
+      lines.push('Diagnostic Item Review');
+      lines.push('=================================================');
+      diagnosticItems.forEach((item, index) => {
+        const correct = state.answers[item.id] === item.correct;
+        lines.push('Question ' + String(index + 1) + ' - ' + categories[item.category]);
+        lines.push('Result: ' + (correct ? 'Correct' : 'Incorrect'));
+        lines.push('Confidence: ' + state.confidence[item.id]);
+        lines.push('Feedback: ' + item.feedback);
+        lines.push('');
+      });
+      lines.push('Personalized Missions Completed');
+      lines.push('=================================================');
+      state.assignedMissions.forEach((mission, index) => {
+        const evidence = state.missionEvidence[mission.id];
+        lines.push('Mission ' + String(index + 1) + ': ' + mission.title);
+        lines.push('Category: ' + categories[mission.category]);
+        lines.push('Pathway Type: ' + mission.mode);
+        lines.push('Activity Type: ' + mission.activity);
+        lines.push('Prompt: ' + mission.prompt);
+        if (evidence && evidence.draggedItems.length > 0) {
+          lines.push('Interactive Evidence Items: ' + evidence.draggedItems.join(', '));
+        }
+        lines.push('Student Explanation:');
+        lines.push(evidence ? evidence.evidence : 'No evidence saved.');
+        lines.push('');
+      });
+      return lines.join('\n');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    document.getElementById('beginBtn').addEventListener('click', () => {
+      state.studentName = document.getElementById('studentName').value.trim();
+      if (!state.studentName) {
+        showFeedback('warning', 'Enter your name.', 'Enter your name before beginning so it appears on your PDF submission.');
+        return;
+      }
+      showScreen('diagnostic');
+    });
+
+    document.getElementById('scoreBtn').addEventListener('click', scoreDiagnostic);
+    document.getElementById('startMissionsBtn').addEventListener('click', () => { renderMissions(); showScreen('missions'); });
+    document.getElementById('checkMissionsBtn').addEventListener('click', checkMissionCompletion);
+
+    document.getElementById('summaryBtn').addEventListener('click', () => {
+      const summary = buildSubmissionSummary();
+      summaryText.textContent = summary;
+      summaryOutput.classList.remove('hidden');
+      pdfBtn.classList.remove('hidden');
+      showFeedback('good', 'Submission summary generated.', 'Save the PDF and upload it to Canvas.');
+    });
+
+    pdfBtn.addEventListener('click', () => {
+      const content = summaryText.textContent || '';
+      if (!content.trim()) {
+        showFeedback('warning', 'Generate the summary first.', 'Generate the summary before saving the PDF.');
+        return;
+      }
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        showFeedback('warning', 'Pop-up blocked.', 'Allow pop-ups for this page and try again.');
+        return;
+      }
+      const pdfHtml = [
+        '<!DOCTYPE html>',
+        '<html lang="en">',
+        '<head>',
+        '<meta charset="UTF-8">',
+        '<title>Adaptive Module 3 Carbohydrate Mastery Submission</title>',
+        '<style>',
+        'body { font-family: Arial, Helvetica, sans-serif; padding: 30px; line-height: 1.5; color: #222; }',
+        'h1 { color: #7b2cbf; }',
+        '.directions { background: #f1e7fb; border: 2px solid #7b2cbf; border-radius: 12px; padding: 16px; margin: 18px 0; }',
+        'pre { white-space: pre-wrap; border: 1px solid #ccc; border-radius: 12px; padding: 16px; background: #fafafa; }',
+        '@media print { .no-print { display: none; } body { padding: 12px; } }',
+        '</style>',
+        '</head>',
+        '<body>',
+        '<h1>Adaptive Module 3 Carbohydrate Mastery Lab™</h1>',
+        '<div class="directions">',
+        '<h2>Canvas Submission Directions</h2>',
+        '<ol>',
+        '<li>Choose <strong>Save as PDF</strong> in the print window.</li>',
+        '<li>Save your file using this format: <strong>LastName_FirstName_Module3AdaptiveCarbLab.pdf</strong>.</li>',
+        '<li>Upload the PDF to the Canvas assignment.</li>',
+        '</ol>',
+        '</div>',
+        '<pre>' + escapeHtml(content) + '</pre>',
+        '<p class="no-print">Use your browser print dialog to save this page as a PDF.</p>',
+        '</body>',
+        '</html>'
+      ].join('');
+      printWindow.document.open();
+      printWindow.document.write(pdfHtml);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => printWindow.print(), 250);
+    });
+
+    function runDeveloperTests() {
+      console.group('Adaptive Module 3 Carbohydrate Mastery Lab Tests');
+      console.assert(diagnosticItems.length === 12, 'Diagnostic has 12 questions.');
+      console.assert(Object.keys(categories).length === 6, 'Six concept categories exist.');
+      console.assert(typeof makeMission('fiber', 'challenge').title === 'string', 'Mission generator works.');
+      console.assert(escapeHtml('<strong>test</strong>').includes('&lt;strong&gt;'), 'HTML escaping works.');
+      console.groupEnd();
+    }
+
+    renderStepper();
+    renderDiagnostic();
+    runDeveloperTests();
+  </script>
+</body>
+</html>
