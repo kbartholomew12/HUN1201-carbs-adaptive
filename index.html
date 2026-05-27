@@ -145,18 +145,18 @@
     };
 
     const diagnosticItems = [
-      { id:'q1', category:'structure', question:'Which statement best describes monosaccharides?', correct:'They are single sugar units that cannot be digested into smaller carbohydrate units.', options:['They are long chains of glucose used only for storage.','They are single sugar units that cannot be digested into smaller carbohydrate units.','They are proteins that help digest carbohydrates.','They are non-digestible carbohydrates found only in grains.'], feedback:'Monosaccharides are the simplest carbohydrate units and are small enough to be absorbed.' },
-      { id:'q2', category:'structure', question:'Which option correctly matches a disaccharide from the reading?', correct:'Sucrose = glucose + fructose', options:['Lactose = glucose + glucose','Glycogen = glucose + fructose','Sucrose = glucose + fructose','Maltose = fructose + galactose'], feedback:'Sucrose is made of glucose and fructose. Lactose is glucose and galactose. Maltose is two glucose units.' },
-      { id:'q3', category:'foods', question:'Which food group is described as the one animal food group that naturally contains carbohydrate?', correct:'Dairy', options:['Meat','Added fats','Dairy','Eggs'], feedback:'Milk, yogurt, and some dairy foods contain lactose.' },
-      { id:'q4', category:'foods', question:'Why can whole fruit affect blood sugar differently than fruit juice?', correct:'Whole fruit contains fiber that slows sugar absorption.', options:['Whole fruit has no sugar.','Fruit juice contains mostly protein.','Fruit juice contains insoluble fat.','Whole fruit contains fiber that slows sugar absorption.'], feedback:'Whole fruit contains natural sugar plus fiber; juice has little fiber and may produce a faster glycemic response.' },
-      { id:'q5', category:'digestion', question:'Where does chemical digestion of carbohydrate begin?', correct:'Mouth, with salivary amylase', options:['Large intestine, with bile','Mouth, with salivary amylase','Liver, with insulin','Stomach, with stomach acid'], feedback:'Carbohydrate digestion begins in the mouth with salivary amylase.' },
-      { id:'q6', category:'digestion', question:'Why can lactose intolerance cause gas, bloating, or diarrhea?', correct:'Lactose is not properly broken down when lactase is low.', options:['Lactose directly destroys insulin.','Lactose is not properly broken down when lactase is low.','Lactose contains no carbohydrate bonds.','Lactose is a type of fat that cannot enter cells.'], feedback:'Lactase breaks lactose into monosaccharides. Low lactase can make lactose difficult to digest.' },
-      { id:'q7', category:'glucose', question:'Which hormone is released when blood glucose is high after a carbohydrate-containing meal?', correct:'Insulin', options:['Glucagon','Lactase','Insulin','Amylase'], feedback:'Insulin is released when blood glucose is high and helps cells take up glucose.' },
-      { id:'q8', category:'glucose', question:'What typically happens during the fasted state more than about 4 hours after a meal?', correct:'Glucagon helps break down liver glycogen to maintain blood glucose.', options:['Insulin rises sharply to store glucose as fat.','Fiber is absorbed directly into the bloodstream.','The stomach chemically digests all starch.','Glucagon helps break down liver glycogen to maintain blood glucose.'], feedback:'In the fasted state, glucagon stimulates glycogenolysis and helps maintain blood glucose.' },
-      { id:'q9', category:'health', question:'Which statement best matches Type 2 diabetes physiology from the reading?', correct:'The body may not use its own insulin effectively, called insulin resistance.', options:['The body cannot absorb any monosaccharides.','The pancreas only releases glucagon after every meal.','The body may not use its own insulin effectively, called insulin resistance.','The body can digest fiber into glucose too quickly.'], feedback:'Type 2 diabetes commonly involves insulin resistance.' },
-      { id:'q10', category:'health', question:'Why are sticky candies and frequent sipping of sweet beverages risky for dental health?', correct:'They increase carbohydrate exposure to oral bacteria that produce acid.', options:['They make the mouth too alkaline.','They increase carbohydrate exposure to oral bacteria that produce acid.','They prevent fermentation by oral bacteria.','They contain protein that dissolves enamel.'], feedback:'Oral bacteria ferment carbohydrates and produce acid, which can contribute to enamel demineralization.' },
-      { id:'q11', category:'fiber', question:'Which statement best describes soluble fiber?', correct:'It forms a gel in digestive juices and can slow glucose absorption.', options:['It only exists in animal foods.','It raises blood glucose faster than added sugar.','It forms a gel in digestive juices and can slow glucose absorption.','It is absorbed directly as glucose.'], feedback:'Soluble fiber forms a gel, slows digestion, helps regulate glucose absorption, and can help lower cholesterol.' },
-      { id:'q12', category:'fiber', question:'Which statement best describes insoluble fiber?', correct:'It helps add bulk and supports bowel regularity.', options:['It is converted directly to blood glucose in the stomach.','It is the same as high-fructose corn syrup.','It is the main carbohydrate in milk.','It helps add bulk and supports bowel regularity.'], feedback:'Insoluble fiber adds bulk and helps prevent constipation.' }
+      { id:'q1', category:'structure', question:'Which statement best describes monosaccharides?', correct:'They are single sugar units that cannot be digested into smaller carbohydrate units.', options:['They are long chains of glucose used only for storage.','They are proteins that help digest carbohydrates.','They are single sugar units that cannot be digested into smaller carbohydrate units.','They are non-digestible carbohydrates found only in grains.'], feedback:'Monosaccharides are the simplest carbohydrate units and are small enough to be absorbed.' },
+      { id:'q2', category:'structure', question:'Which option correctly matches a disaccharide from the reading?', correct:'Sucrose = glucose + fructose', options:['Lactose = glucose + glucose','Sucrose = glucose + fructose','Glycogen = glucose + fructose','Maltose = fructose + galactose'], feedback:'Sucrose is made of glucose and fructose. Lactose is glucose and galactose. Maltose is two glucose units.' },
+      { id:'q3', category:'foods', question:'Which food group is described as the one animal food group that naturally contains carbohydrate?', correct:'Dairy', options:['Eggs','Meat','Added fats','Dairy'], feedback:'Milk, yogurt, and some dairy foods contain lactose.' },
+      { id:'q4', category:'foods', question:'Why can whole fruit affect blood sugar differently than fruit juice?', correct:'Whole fruit contains fiber that slows sugar absorption.', options:['Whole fruit contains fiber that slows sugar absorption.','Fruit juice contains mostly protein.','Fruit juice contains insoluble fat.','Whole fruit has no sugar.'], feedback:'Whole fruit contains natural sugar plus fiber; juice has little fiber and may produce a faster glycemic response.' },
+      { id:'q5', category:'digestion', question:'Where does chemical digestion of carbohydrate begin?', correct:'Mouth, with salivary amylase', options:['Large intestine, with bile','Stomach, with stomach acid','Mouth, with salivary amylase','Liver, with insulin'], feedback:'Carbohydrate digestion begins in the mouth with salivary amylase.' },
+      { id:'q6', category:'digestion', question:'Why can lactose intolerance cause gas, bloating, or diarrhea?', correct:'Lactose is not properly broken down when lactase is low.', options:['Lactose is a type of fat that cannot enter cells.','Lactose directly destroys insulin.','Lactose is not properly broken down when lactase is low.','Lactose contains no carbohydrate bonds.'], feedback:'Lactase breaks lactose into monosaccharides. Low lactase can make lactose difficult to digest.' },
+      { id:'q7', category:'glucose', question:'Which hormone is released when blood glucose is high after a carbohydrate-containing meal?', correct:'Insulin', options:['Glucagon','Amylase','Lactase','Insulin'], feedback:'Insulin is released when blood glucose is high and helps cells take up glucose.' },
+      { id:'q8', category:'glucose', question:'What typically happens during the fasted state more than about 4 hours after a meal?', correct:'Glucagon helps break down liver glycogen to maintain blood glucose.', options:['The stomach chemically digests all starch.','Glucagon helps break down liver glycogen to maintain blood glucose.','Fiber is absorbed directly into the bloodstream.','Insulin rises sharply to store glucose as fat.'], feedback:'In the fasted state, glucagon stimulates glycogenolysis and helps maintain blood glucose.' },
+      { id:'q9', category:'health', question:'Which statement best matches Type 2 diabetes physiology from the reading?', correct:'The body may not use its own insulin effectively, called insulin resistance.', options:['The body can digest fiber into glucose too quickly.','The body may not use its own insulin effectively, called insulin resistance.','The body cannot absorb any monosaccharides.','The pancreas only releases glucagon after every meal.'], feedback:'Type 2 diabetes commonly involves insulin resistance.' },
+      { id:'q10', category:'health', question:'Why are sticky candies and frequent sipping of sweet beverages risky for dental health?', correct:'They increase carbohydrate exposure to oral bacteria that produce acid.', options:['They prevent fermentation by oral bacteria.','They contain protein that dissolves enamel.','They increase carbohydrate exposure to oral bacteria that produce acid.','They make the mouth too alkaline.'], feedback:'Oral bacteria ferment carbohydrates and produce acid, which can contribute to enamel demineralization.' },
+      { id:'q11', category:'fiber', question:'Which statement best describes soluble fiber?', correct:'It forms a gel in digestive juices and can slow glucose absorption.', options:['It raises blood glucose faster than added sugar.','It only exists in animal foods.','It is absorbed directly as glucose.','It forms a gel in digestive juices and can slow glucose absorption.'], feedback:'Soluble fiber forms a gel, slows digestion, helps regulate glucose absorption, and can help lower cholesterol.' },
+      { id:'q12', category:'fiber', question:'Which statement best describes insoluble fiber?', correct:'It helps add bulk and supports bowel regularity.', options:['It is the main carbohydrate in milk.','It helps add bulk and supports bowel regularity.','It is converted directly to blood glucose in the stomach.','It is the same as high-fructose corn syrup.'], feedback:'Insoluble fiber adds bulk and helps prevent constipation.' }
     ];
 
     const state = { step:'intro', answers:{}, confidence:{}, scores:{}, assignedMissions:[], missionEvidence:{}, studentName:'' };
@@ -317,13 +317,34 @@
     }
 
     function renderMissionActivity(mission) {
-      const wrapper = document.createElement('div'); wrapper.className = 'mini-sim';
-      if (['builder','sorter','foodSort','sequence','fiberSort','healthMatch'].includes(mission.activity)) wrapper.appendChild(renderDragMission(mission));
-      else if (['glucoseSim','pancreas'].includes(mission.activity)) wrapper.appendChild(renderSliderMission(mission));
-      else wrapper.appendChild(renderWritingMission(mission));
-      const label = document.createElement('label'); label.textContent = 'Explain what you learned or how you applied the Module 3 reading.'; wrapper.appendChild(label);
-      const textarea = document.createElement('textarea'); textarea.id = 'evidence_' + mission.id; textarea.placeholder = 'Write 3-5 sentences using Module 3 terms.'; wrapper.appendChild(textarea);
-      const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'secondary-btn'; btn.textContent = 'Save This Mission Evidence'; btn.addEventListener('click', () => saveMission(mission)); wrapper.appendChild(btn);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'mini-sim';
+
+      if (['builder','sorter','foodSort','sequence','fiberSort','healthMatch'].includes(mission.activity)) {
+        wrapper.appendChild(renderDragMission(mission));
+      } else if (['glucoseSim','pancreas'].includes(mission.activity)) {
+        wrapper.appendChild(renderSliderMission(mission));
+      } else {
+        wrapper.appendChild(renderInteractiveChoiceMission(mission));
+      }
+
+      const label = document.createElement('label');
+      label.textContent = 'Short explanation (2-4 sentences max)';
+      wrapper.appendChild(label);
+
+      const textarea = document.createElement('textarea');
+      textarea.id = 'evidence_' + mission.id;
+      textarea.placeholder = 'Briefly explain the physiology or reasoning behind your interaction choices.';
+      textarea.style.minHeight = '80px';
+      wrapper.appendChild(textarea);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'secondary-btn';
+      btn.textContent = 'Save This Mission Evidence';
+      btn.addEventListener('click', () => saveMission(mission));
+      wrapper.appendChild(btn);
+
       return wrapper;
     }
 
@@ -350,12 +371,61 @@
       slider.dispatchEvent(new Event('input')); return container;
     }
 
-    function renderWritingMission(mission) { const container = document.createElement('div'); const prompt = document.createElement('p'); prompt.textContent = 'Scenario: ' + getWritingScenario(mission.activity); container.appendChild(prompt); return container; }
+    function renderInteractiveChoiceMission(mission) {
+      const container = document.createElement('div');
+
+      const prompt = document.createElement('p');
+      prompt.innerHTML = '<strong>Interactive Challenge:</strong> ' + getWritingScenario(mission.activity);
+      container.appendChild(prompt);
+
+      const optionsWrap = document.createElement('div');
+      optionsWrap.className = 'option-grid';
+
+      const challengeOptions = getInteractiveOptions(mission.activity);
+
+      challengeOptions.forEach((option) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice-btn';
+        btn.textContent = option;
+
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('selected');
+        });
+
+        optionsWrap.appendChild(btn);
+      });
+
+      container.appendChild(optionsWrap);
+
+      const instruction = document.createElement('p');
+      instruction.className = 'small-note';
+      instruction.textContent = 'Select the best strategies, explanations, or physiological outcomes based on the Module 3 reading.';
+      container.appendChild(instruction);
+
+      return container;
+    }
+    function getInteractiveOptions(activity) {
+      const options = {
+        designer:['More fiber slows glucose absorption','Refined grains digest faster','Protein completely stops glucose rise','Fiber is digested into glucose','Whole fruit usually contains more fiber than juice'],
+        compare:['Whole grains often digest more slowly','Fruit naturally contains carbohydrate','Added sugar and fruit are metabolically identical in all situations','Juice often contains less fiber than whole fruit','Fiber may help regulate blood glucose'],
+        claim:['Check grams of added sugar','Check whether whole grain is listed first','Ignore the ingredient list','Check fiber content','Serving size matters'],
+        case:['Lactase deficiency may impair lactose digestion','Undigested lactose may be fermented by bacteria','Lactose intolerance is an allergy','Symptoms may include bloating','Lactose is a disaccharide'],
+        explain:['Only monosaccharides are absorbed','Disaccharides require digestion first','Starch contains many glucose units','Protein digestion absorbs glucose','Carbohydrate digestion begins in the mouth'],
+        mealHack:['Add fiber-rich foods','Reduce refined carbohydrate load','Pair carbs with protein','Remove all carbohydrates completely','Use whole grains instead of refined grains'],
+        myth:['Context matters in nutrition','Fiber influences glucose response','All carbs are unhealthy','Whole foods and added sugars are identical','Food processing may affect digestion speed'],
+        fiberUpgrade:['Add beans','Choose whole fruit','Increase whole grains','Add vegetables','Replace all carbohydrates with fat'],
+        influencer:['Use evidence-based language','Avoid exaggeration','Explain physiology clearly','Use fear-based messaging','Include realistic examples']
+      };
+
+      return options[activity] || ['Module 3 concept','Physiology connection','Evidence-based explanation'];
+    }
+
     function getWritingScenario(activity) { const scenarios = { designer:'Create a student-friendly explanation showing why simple sugars generally digest faster than complex carbohydrates, and why fiber behaves differently.', compare:'A student says all complex carbs are healthy and all simple sugars are bad. Correct this using fruit, whole grains, refined grains, and added sugar examples.', claim:'A cereal says made with whole grains. Explain what a student should check before assuming it is mostly whole grain.', case:'A student drinks milk and later has gas, bloating, and diarrhea. Explain the carbohydrate digestion issue involved.', explain:'Explain why starch must be digested before absorption but glucose does not require further carbohydrate digestion.', mealHack:'Redesign a sweet drink plus pastry meal to reduce a sharp blood glucose rise while keeping it realistic for a college student.', myth:'Choose one carb myth, explain what is misleading, and rewrite it as a science-based message.', fiberUpgrade:'Upgrade a low-fiber day of eating with at least five fiber-rich foods and explain the expected effects.', influencer:'Create a short social media post that teaches soluble or insoluble fiber accurately without exaggeration.' }; return scenarios[activity] || 'Apply your Module 3 concept to a realistic nutrition situation.'; }
 
     function saveMission(mission) {
       const evidence = document.getElementById('evidence_' + mission.id).value.trim();
-      if (evidence.length < 120) { showFeedback('warning','Add more mission evidence.','Write at least 4 strong sentences explaining your reasoning for this mission.'); return; }
+      if (evidence.length < 40) { showFeedback('warning','Add more mission evidence.','Write at least 4 strong sentences explaining your reasoning for this mission.'); return; }
       const drop = document.getElementById('drop_' + mission.id);
       const draggedItems = drop ? Array.from(drop.querySelectorAll('.drag-item')).map((item) => item.textContent) : [];
       state.missionEvidence[mission.id] = { title:mission.title, category:categories[mission.category], mode:mission.mode, activity:mission.activity, draggedItems:draggedItems, evidence:evidence };
