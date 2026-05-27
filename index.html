@@ -74,7 +74,7 @@
 
     button:hover, .choice:hover { transform: translateY(-1px); border-color: var(--primary); background: var(--primary-light); }
     button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
-    .choice.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .choice.selected, .confidence-btn.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
     .primary-btn { background: var(--secondary); color: #fff; border-color: var(--secondary); text-align: center; }
     .secondary-btn { background: var(--primary); color: #fff; border-color: var(--primary); text-align: center; }
     .ghost-btn { background: #fff; color: var(--secondary); border-color: var(--secondary); text-align: center; }
@@ -342,6 +342,7 @@
 
     const stepper = document.getElementById('stepper');
     const diagnosticQuestions = document.getElementById('diagnosticQuestions');
+    let diagnosticRendered = false;
     const feedback = document.getElementById('feedback');
     const scoreGrid = document.getElementById('scoreGrid');
     const overallFeedback = document.getElementById('overallFeedback');
@@ -395,10 +396,13 @@
     }
 
     function renderDiagnostic() {
+      if (diagnosticRendered) return;
+      diagnosticRendered = true;
       diagnosticQuestions.textContent = '';
       diagnosticItems.forEach((item, index) => {
         const card = document.createElement('div');
         card.className = 'question-card';
+        card.id = 'card_' + item.id;
 
         const heading = document.createElement('h3');
         heading.textContent = 'Question ' + String(index + 1) + ': ' + categories[item.category];
@@ -415,10 +419,15 @@
           btn.type = 'button';
           btn.className = 'choice';
           btn.textContent = option;
+          btn.setAttribute('aria-pressed', 'false');
           btn.addEventListener('click', () => {
             state.answers[item.id] = optionIndex;
-            optionGrid.querySelectorAll('.choice').forEach((choice) => choice.classList.remove('selected'));
+            optionGrid.querySelectorAll('.choice').forEach((choice) => {
+              choice.classList.remove('selected');
+              choice.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('selected');
+            btn.setAttribute('aria-pressed', 'true');
           });
           optionGrid.appendChild(btn);
         });
@@ -426,19 +435,26 @@
 
         const confidenceLabel = document.createElement('p');
         confidenceLabel.className = 'small-note';
-        confidenceLabel.textContent = 'Confidence rating:';
+        confidenceLabel.textContent = 'Confidence rating: choose one';
         card.appendChild(confidenceLabel);
 
         const confidenceRow = document.createElement('div');
         confidenceRow.className = 'confidence-row';
+        confidenceRow.dataset.questionId = item.id;
         ['Low', 'Medium', 'High'].forEach((level) => {
           const btn = document.createElement('button');
           btn.type = 'button';
+          btn.className = 'confidence-btn';
           btn.textContent = level;
+          btn.setAttribute('aria-pressed', 'false');
           btn.addEventListener('click', () => {
             state.confidence[item.id] = level;
-            confidenceRow.querySelectorAll('button').forEach((choice) => choice.classList.remove('selected'));
+            confidenceRow.querySelectorAll('button').forEach((choice) => {
+              choice.classList.remove('selected');
+              choice.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('selected');
+            btn.setAttribute('aria-pressed', 'true');
           });
           confidenceRow.appendChild(btn);
         });
@@ -448,10 +464,22 @@
     }
 
     function scoreDiagnostic() {
-      const missingAnswer = diagnosticItems.some((item) => state.answers[item.id] === undefined);
-      const missingConfidence = diagnosticItems.some((item) => !state.confidence[item.id]);
-      if (missingAnswer || missingConfidence) {
-        showFeedback('warning', 'Complete all items.', 'Answer every diagnostic question and select a confidence rating for each one.');
+      const missingAnswers = diagnosticItems
+        .map((item, index) => state.answers[item.id] === undefined ? index + 1 : null)
+        .filter((value) => value !== null);
+      const missingConfidence = diagnosticItems
+        .map((item, index) => !state.confidence[item.id] ? index + 1 : null)
+        .filter((value) => value !== null);
+
+      if (missingAnswers.length > 0 || missingConfidence.length > 0) {
+        let message = 'Please complete the missing diagnostic items before moving on.';
+        if (missingAnswers.length > 0) {
+          message += ' Missing answers: Question ' + missingAnswers.join(', Question ') + '.';
+        }
+        if (missingConfidence.length > 0) {
+          message += ' Missing confidence ratings: Question ' + missingConfidence.join(', Question ') + '.';
+        }
+        showFeedback('warning', 'Complete all items.', message);
         return;
       }
 
